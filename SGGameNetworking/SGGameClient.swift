@@ -14,6 +14,7 @@ import CoreMotion
 protocol SGGameClientDelegate {
     func didConnect()
     func didDisconnect()
+    func didReceivePacketFromPlayer(packet: SGGamePacket, player: SGGamePlayer)
 }
 
 class SGGameClient: NSObject {

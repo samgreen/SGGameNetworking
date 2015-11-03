@@ -24,4 +24,8 @@ class JoinViewController: UIViewController, SGGameClientDelegate {
     func didDisconnect() {
         print("Disconnected")
     }
+    
+    func didReceivePacketFromPlayer(packet: SGGamePacket, player: SGGamePlayer) {
+        print("Received packet from player")
+    }
 }

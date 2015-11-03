@@ -11,6 +11,7 @@ import UIKit
 
 class SGGamePlayer: Hashable, Equatable {
     let address: NSData
+    var name: String?
     var hashValue: Int { return address.hashValue }
     
     init(address: NSData) {
