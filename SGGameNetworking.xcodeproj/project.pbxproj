@@ -12,15 +12,18 @@
 		51F2BC431BE92518008112B0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 51F2BC411BE92518008112B0 /* Main.storyboard */; };
 		51F2BC451BE92518008112B0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 51F2BC441BE92518008112B0 /* Assets.xcassets */; };
 		51F2BC481BE92518008112B0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 51F2BC461BE92518008112B0 /* LaunchScreen.storyboard */; };
-		51F2BC541BE9253C008112B0 /* GameServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F2BC511BE9253C008112B0 /* GameServer.swift */; };
-		51F2BC551BE9253C008112B0 /* GameServerNetService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F2BC521BE9253C008112B0 /* GameServerNetService.swift */; };
+		51F2BC541BE9253C008112B0 /* SGGameServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F2BC511BE9253C008112B0 /* SGGameServer.swift */; };
+		51F2BC551BE9253C008112B0 /* SGGameServerNetService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F2BC521BE9253C008112B0 /* SGGameServerNetService.swift */; };
 		51F2BC561BE9253C008112B0 /* GCDAsyncSocket+ServerHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F2BC531BE9253C008112B0 /* GCDAsyncSocket+ServerHelpers.swift */; };
-		51F2BC591BE9254A008112B0 /* GameClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F2BC571BE9254A008112B0 /* GameClient.swift */; };
-		51F2BC5A1BE9254A008112B0 /* GameClientNetServiceBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F2BC581BE9254A008112B0 /* GameClientNetServiceBrowser.swift */; };
+		51F2BC591BE9254A008112B0 /* SGGameClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F2BC571BE9254A008112B0 /* SGGameClient.swift */; };
+		51F2BC5A1BE9254A008112B0 /* SGGameClientNetServiceBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F2BC581BE9254A008112B0 /* SGGameClientNetServiceBrowser.swift */; };
 		51F2BC5C1BE92567008112B0 /* CocoaAsyncSocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51F2BC5B1BE92567008112B0 /* CocoaAsyncSocket.framework */; };
 		51F2BC5E1BE92592008112B0 /* SGGamePlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F2BC5D1BE92592008112B0 /* SGGamePlayer.swift */; };
 		51F2BC601BE92620008112B0 /* SGGamePacket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F2BC5F1BE92620008112B0 /* SGGamePacket.swift */; };
 		51F2BC621BE929D1008112B0 /* GCDAsyncSocket+ClientHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F2BC611BE929D1008112B0 /* GCDAsyncSocket+ClientHelpers.swift */; };
+		51F2BC681BE92C1F008112B0 /* HostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F2BC671BE92C1F008112B0 /* HostViewController.swift */; };
+		51F2BC6A1BE92C26008112B0 /* JoinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F2BC691BE92C26008112B0 /* JoinViewController.swift */; };
+		51F2BC6C1BE93264008112B0 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51F2BC6B1BE93264008112B0 /* GameViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,15 +34,18 @@
 		51F2BC441BE92518008112B0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		51F2BC471BE92518008112B0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		51F2BC491BE92518008112B0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		51F2BC511BE9253C008112B0 /* GameServer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameServer.swift; sourceTree = "<group>"; };
-		51F2BC521BE9253C008112B0 /* GameServerNetService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameServerNetService.swift; sourceTree = "<group>"; };
+		51F2BC511BE9253C008112B0 /* SGGameServer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SGGameServer.swift; sourceTree = "<group>"; };
+		51F2BC521BE9253C008112B0 /* SGGameServerNetService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SGGameServerNetService.swift; sourceTree = "<group>"; };
 		51F2BC531BE9253C008112B0 /* GCDAsyncSocket+ServerHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GCDAsyncSocket+ServerHelpers.swift"; sourceTree = "<group>"; };
-		51F2BC571BE9254A008112B0 /* GameClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameClient.swift; sourceTree = "<group>"; };
-		51F2BC581BE9254A008112B0 /* GameClientNetServiceBrowser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameClientNetServiceBrowser.swift; sourceTree = "<group>"; };
+		51F2BC571BE9254A008112B0 /* SGGameClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SGGameClient.swift; sourceTree = "<group>"; };
+		51F2BC581BE9254A008112B0 /* SGGameClientNetServiceBrowser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SGGameClientNetServiceBrowser.swift; sourceTree = "<group>"; };
 		51F2BC5B1BE92567008112B0 /* CocoaAsyncSocket.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CocoaAsyncSocket.framework; sourceTree = "<group>"; };
 		51F2BC5D1BE92592008112B0 /* SGGamePlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SGGamePlayer.swift; sourceTree = "<group>"; };
 		51F2BC5F1BE92620008112B0 /* SGGamePacket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SGGamePacket.swift; sourceTree = "<group>"; };
 		51F2BC611BE929D1008112B0 /* GCDAsyncSocket+ClientHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GCDAsyncSocket+ClientHelpers.swift"; sourceTree = "<group>"; };
+		51F2BC671BE92C1F008112B0 /* HostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HostViewController.swift; sourceTree = "<group>"; };
+		51F2BC691BE92C26008112B0 /* JoinViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JoinViewController.swift; sourceTree = "<group>"; };
+		51F2BC6B1BE93264008112B0 /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +80,7 @@
 		51F2BC3C1BE92518008112B0 /* SGGameNetworking */ = {
 			isa = PBXGroup;
 			children = (
+				51F2BC661BE92C0B008112B0 /* Example */,
 				51F2BC651BE92A0C008112B0 /* SGGameNetworking */,
 				51F2BC3D1BE92518008112B0 /* AppDelegate.swift */,
 				51F2BC3F1BE92518008112B0 /* ViewController.swift */,
@@ -89,8 +96,8 @@
 			isa = PBXGroup;
 			children = (
 				51F2BC631BE929E9008112B0 /* Extensions */,
-				51F2BC571BE9254A008112B0 /* GameClient.swift */,
-				51F2BC581BE9254A008112B0 /* GameClientNetServiceBrowser.swift */,
+				51F2BC571BE9254A008112B0 /* SGGameClient.swift */,
+				51F2BC581BE9254A008112B0 /* SGGameClientNetServiceBrowser.swift */,
 			);
 			name = Client;
 			sourceTree = "<group>";
@@ -99,8 +106,8 @@
 			isa = PBXGroup;
 			children = (
 				51F2BC641BE929EF008112B0 /* Extensions */,
-				51F2BC511BE9253C008112B0 /* GameServer.swift */,
-				51F2BC521BE9253C008112B0 /* GameServerNetService.swift */,
+				51F2BC511BE9253C008112B0 /* SGGameServer.swift */,
+				51F2BC521BE9253C008112B0 /* SGGameServerNetService.swift */,
 			);
 			name = Server;
 			sourceTree = "<group>";
@@ -130,6 +137,16 @@
 				51F2BC4F1BE92527008112B0 /* Client */,
 			);
 			name = SGGameNetworking;
+			sourceTree = "<group>";
+		};
+		51F2BC661BE92C0B008112B0 /* Example */ = {
+			isa = PBXGroup;
+			children = (
+				51F2BC671BE92C1F008112B0 /* HostViewController.swift */,
+				51F2BC691BE92C26008112B0 /* JoinViewController.swift */,
+				51F2BC6B1BE93264008112B0 /* GameViewController.swift */,
+			);
+			name = Example;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -203,15 +220,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				51F2BC681BE92C1F008112B0 /* HostViewController.swift in Sources */,
 				51F2BC401BE92518008112B0 /* ViewController.swift in Sources */,
 				51F2BC621BE929D1008112B0 /* GCDAsyncSocket+ClientHelpers.swift in Sources */,
-				51F2BC541BE9253C008112B0 /* GameServer.swift in Sources */,
+				51F2BC541BE9253C008112B0 /* SGGameServer.swift in Sources */,
+				51F2BC6C1BE93264008112B0 /* GameViewController.swift in Sources */,
 				51F2BC561BE9253C008112B0 /* GCDAsyncSocket+ServerHelpers.swift in Sources */,
 				51F2BC601BE92620008112B0 /* SGGamePacket.swift in Sources */,
-				51F2BC551BE9253C008112B0 /* GameServerNetService.swift in Sources */,
+				51F2BC551BE9253C008112B0 /* SGGameServerNetService.swift in Sources */,
 				51F2BC5E1BE92592008112B0 /* SGGamePlayer.swift in Sources */,
-				51F2BC5A1BE9254A008112B0 /* GameClientNetServiceBrowser.swift in Sources */,
-				51F2BC591BE9254A008112B0 /* GameClient.swift in Sources */,
+				51F2BC5A1BE9254A008112B0 /* SGGameClientNetServiceBrowser.swift in Sources */,
+				51F2BC591BE9254A008112B0 /* SGGameClient.swift in Sources */,
+				51F2BC6A1BE92C26008112B0 /* JoinViewController.swift in Sources */,
 				51F2BC3E1BE92518008112B0 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

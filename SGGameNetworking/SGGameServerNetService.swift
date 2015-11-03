@@ -8,7 +8,7 @@
 
 import Foundation
 
-class GameServerNetService: NSObject, NSNetServiceDelegate {
+class SGGameServerNetService: NSObject, NSNetServiceDelegate {
     var service: NSNetService!
     let name: String
     

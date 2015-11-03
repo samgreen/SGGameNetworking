@@ -11,20 +11,18 @@ import UIKit
 import CocoaAsyncSocket
 import CoreMotion
 
-protocol GameClientDelegate {
+protocol SGGameClientDelegate {
     func didConnect()
     func didDisconnect()
 }
 
-class GameClient: NSObject {
-    var delegate: GameClientDelegate?
+class SGGameClient: NSObject {
+    var delegate: SGGameClientDelegate?
     
     var socket: GCDAsyncSocket!
-    let queue = dispatch_queue_create("com.everybodypaintstuff.client", DISPATCH_QUEUE_SERIAL)
+    let queue = dispatch_queue_create("com.sggamenetworking.client", DISPATCH_QUEUE_SERIAL)
     
-    var service = GameClientNetServiceBrowser()
-    
-    var lastBrushSizePacketTime = NSDate()
+    var service = SGGameClientNetServiceBrowser()
     
     override init() {
         super.init()
@@ -32,10 +30,14 @@ class GameClient: NSObject {
         socket = GCDAsyncSocket(delegate: self, delegateQueue: queue)
         service.delegate = self
     }
+    
+    func startSearchingForGames() {
+        service.startBrowsing()
+    }
 }
 
 // MARK: GameClientNetServiceBrowserDelegate
-extension GameClient: GameClientNetServiceBrowserDelegate {
+extension SGGameClient: SGGameClientNetServiceBrowserDelegate {
     func didFindService(service: NSNetService) {
         if let address = service.addresses?.first {
             do {
@@ -48,7 +50,7 @@ extension GameClient: GameClientNetServiceBrowserDelegate {
 }
 
 // MARK: GCDAsyncSocketDelegate
-extension GameClient: GCDAsyncSocketDelegate {
+extension SGGameClient: GCDAsyncSocketDelegate {
     func socket(sock: GCDAsyncSocket!, didConnectToHost host: String!, port: UInt16) {
         print("Connected to address: \(sock.connectedHost):\(sock.connectedPort)")
         service.stopBrowsing()

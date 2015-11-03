@@ -22,13 +22,12 @@ protocol SGGameServerDelegate {
     func didReceivePacketFromPlayer(player: SGGamePlayer, packet: SGGamePacket)
 }
 
-class GameServer: NSObject, GCDAsyncSocketDelegate {
+class SGGameServer: NSObject, GCDAsyncSocketDelegate {
     var delegate: SGGameServerDelegate?
+    var service: SGGameServerNetService!
     
     var socket: GCDAsyncSocket!
     let queue = dispatch_queue_create("com.everybodypaintstuff.server", DISPATCH_QUEUE_SERIAL)
-    
-    var service: GameServerNetService!
     
     var players = [GCDAsyncSocket: SGGamePlayer]()
     
@@ -44,7 +43,7 @@ class GameServer: NSObject, GCDAsyncSocketDelegate {
             print("Unable to bind socket.")
         }
         
-        service = GameServerNetService(name: String(self), port: Int32(socket.localPort))
+        service = SGGameServerNetService(name: String(self), port: Int32(socket.localPort))
     }
     
     // MARK: GCDAsyncSocketDelegate

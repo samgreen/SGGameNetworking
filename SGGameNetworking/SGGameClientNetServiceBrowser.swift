@@ -8,12 +8,13 @@
 
 import Foundation
 
-protocol GameClientNetServiceBrowserDelegate {
+protocol SGGameClientNetServiceBrowserDelegate {
     func didFindService(service: NSNetService)
 }
 
-class GameClientNetServiceBrowser: NSObject, NSNetServiceBrowserDelegate, NSNetServiceDelegate {
-    var delegate: GameClientNetServiceBrowserDelegate?
+class SGGameClientNetServiceBrowser: NSObject, NSNetServiceBrowserDelegate, NSNetServiceDelegate {
+    var delegate: SGGameClientNetServiceBrowserDelegate?
+    
     let serviceBrowser = NSNetServiceBrowser()
     var services = [NSNetService]()
     let name: String
