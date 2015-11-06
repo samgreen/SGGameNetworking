@@ -11,21 +11,35 @@ import UIKit
 import CocoaAsyncSocket
 import CoreMotion
 
+struct SGGameServerHost {
+    let name: String
+    let address: NSData
+}
+
 protocol SGGameClientDelegate {
+    func didFindServerHost(host: SGGameServerHost)
+    
     func didConnect()
     func didDisconnect()
+    
     func didReceivePacketFromPlayer(packet: SGGamePacket, player: SGGamePlayer)
 }
 
 class SGGameClient: NSObject {
     var delegate: SGGameClientDelegate?
     
-    var socket: GCDAsyncSocket!
-    let queue = dispatch_queue_create("com.sggamenetworking.client", DISPATCH_QUEUE_SERIAL)
-    
-    var service = SGGameClientNetServiceBrowser()
+    private let service: SGGameClientNetServiceBrowser
+    private var socket: GCDAsyncSocket!
+    private let queue: dispatch_queue_t
     
     override init() {
+        fatalError("Call init(name:) instead.")
+    }
+    
+    init(name: String) {
+        queue = dispatch_queue_create("com.sggamenetworking.\(name)", DISPATCH_QUEUE_SERIAL)
+        service = SGGameClientNetServiceBrowser(name: name)
+        
         super.init()
         
         socket = GCDAsyncSocket(delegate: self, delegateQueue: queue)
@@ -35,17 +49,25 @@ class SGGameClient: NSObject {
     func startSearchingForGames() {
         service.startBrowsing()
     }
+    
+    func stopSearchingForGames() {
+        service.stopBrowsing()
+    }
+    
+    func connectToHost(host: SGGameServerHost) {
+        do {
+            try socket.connectToAddress(host.address)
+        } catch {
+            print("Failed to connect to remote service.")
+        }
+    }
 }
 
 // MARK: GameClientNetServiceBrowserDelegate
 extension SGGameClient: SGGameClientNetServiceBrowserDelegate {
     func didFindService(service: NSNetService) {
         if let address = service.addresses?.first {
-            do {
-                try socket.connectToAddress(address)
-            } catch {
-                print("Failed to connect to remote service.")
-            }
+            delegate?.didFindServerHost(SGGameServerHost(name: service.name, address: address))
         }
     }
 }
@@ -54,14 +76,11 @@ extension SGGameClient: SGGameClientNetServiceBrowserDelegate {
 extension SGGameClient: GCDAsyncSocketDelegate {
     func socket(sock: GCDAsyncSocket!, didConnectToHost host: String!, port: UInt16) {
         print("Connected to address: \(sock.connectedHost):\(sock.connectedPort)")
-        service.stopBrowsing()
         delegate?.didConnect()
     }
     
     func socketDidDisconnect(sock: GCDAsyncSocket!, withError error: NSError!) {
         print("Failed to connect to address. Details: \(error)")
-        // Auto reconnect with browse
-        service.startBrowsing()
         delegate?.didDisconnect()
     }
     

@@ -10,6 +10,8 @@ import Foundation
 import UIKit
 
 class GameViewController: UIViewController {
+    var playerToView = [SGGamePlayer: UIView]()
+    
     var server: SGGameServer? {
         didSet {
             self.server?.delegate = self
@@ -24,11 +26,15 @@ class GameViewController: UIViewController {
 
 extension GameViewController: SGGameServerDelegate {
     func playerDidConnect(player: SGGamePlayer) {
-        
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: 64, height: 64))
+        view.addSubview(view)
+        playerToView[player] = view
     }
     
     func playerDidDisconnect(player: SGGamePlayer) {
-        
+        if let view = playerToView[player] {
+            view.removeFromSuperview()
+        }
     }
     
     func didReceivePacketFromPlayer(player: SGGamePlayer, packet: SGGamePacket) {
@@ -37,6 +43,10 @@ extension GameViewController: SGGameServerDelegate {
 }
 
 extension GameViewController: SGGameClientDelegate {
+    func didFindServerHost(host: SGGameServerHost) {
+        print("Found host: \(host.name)")
+    }
+    
     func didConnect() {
         
     }

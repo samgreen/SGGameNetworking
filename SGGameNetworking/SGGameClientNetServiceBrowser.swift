@@ -15,25 +15,23 @@ protocol SGGameClientNetServiceBrowserDelegate {
 class SGGameClientNetServiceBrowser: NSObject, NSNetServiceBrowserDelegate, NSNetServiceDelegate {
     var delegate: SGGameClientNetServiceBrowserDelegate?
     
-    let serviceBrowser = NSNetServiceBrowser()
-    var services = [NSNetService]()
-    let name: String
+    private let serviceBrowser = NSNetServiceBrowser()
+    private var services = [NSNetService]()
+    private let name: String
     
     override init() {
-        fatalError("You must call init(name:)")
+        fatalError("Call init(name:) instead.")
     }
     
     init(name: String) {
         self.name = name
         
         super.init()
-        
-        startBrowsing()
     }
     
     func startBrowsing() {
         serviceBrowser.delegate = self
-        serviceBrowser.searchForServicesOfType(".\(self.name)._tcp.", inDomain: "local")
+        serviceBrowser.searchForServicesOfType("_\(self.name)._tcp.", inDomain: "local")
     }
     
     func stopBrowsing() {
@@ -46,10 +44,10 @@ class SGGameClientNetServiceBrowser: NSObject, NSNetServiceBrowserDelegate, NSNe
     func netServiceBrowser(browser: NSNetServiceBrowser, didFindService service: NSNetService, moreComing: Bool) {
         print("Found service: \(service)")
         
+        services.append(service)
+        
         service.delegate = self
         service.resolveWithTimeout(30)
-        
-        services.append(service)
     }
     
     func netServiceBrowser(browser: NSNetServiceBrowser, didRemoveService service: NSNetService, moreComing: Bool) {
@@ -64,8 +62,6 @@ class SGGameClientNetServiceBrowser: NSObject, NSNetServiceBrowserDelegate, NSNe
     // MARK: NSNetServiceDelegate
     func netService(sender: NSNetService, didNotResolve errorDict: [String : NSNumber]) {
         print("Failed to resolve service: \(sender) - Details: \(errorDict)")
-        
-        sender.delegate = nil
     }
     
     func netServiceDidResolveAddress(sender: NSNetService) {

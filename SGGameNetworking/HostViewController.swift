@@ -9,17 +9,24 @@
 import Foundation
 import UIKit
 
-class HostViewController: UIViewController, SGGameServerDelegate {
-    let server = SGGameServer()
+class HostViewController: UITableViewController, SGGameServerDelegate {
+    let server = SGGameServer(name: "ExampleGame")
     
-    func startHosting() {
-        do {
-            try server.startListening()
-        } catch {
-            print("Server failed to start listening.")
-        }
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        startHosting()
     }
     
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        stopHosting()
+    }
+    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return .LightContent
+    }
+    
+    // MARK: SGGameServerDelegate
     func playerDidConnect(player: SGGamePlayer) {
         print("Player connected: \(player)")
     }
@@ -30,5 +37,19 @@ class HostViewController: UIViewController, SGGameServerDelegate {
     
     func didReceivePacketFromPlayer(player: SGGamePlayer, packet: SGGamePacket) {
         print("Received packet from player: \(player)")
+    }
+    
+    // MARK: Helpers
+    func startHosting() {
+        do {
+            try server.startListening()
+            print("Host server started successfully.")
+        } catch {
+            print("Server failed to start listening.")
+        }
+    }
+    
+    func stopHosting() {
+        server.stopListening()
     }
 }

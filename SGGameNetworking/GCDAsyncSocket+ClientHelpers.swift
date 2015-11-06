@@ -11,7 +11,7 @@ import CocoaAsyncSocket
 
 extension GCDAsyncSocket {
     func writePlayerName(name: String) {
-        writePacket(SGGamePacket(type: .PlayerName, object: "A Player Name"))
+        writePacket(SGGamePacket(object: ["type": "player_name", "name": "A Player Name"]))
     }
     
     func writePacket(packet: SGGamePacket) {

@@ -26,13 +26,22 @@ class SGGameServer: NSObject, GCDAsyncSocketDelegate {
     var delegate: SGGameServerDelegate?
     var service: SGGameServerNetService!
     
-    var socket: GCDAsyncSocket!
-    let queue = dispatch_queue_create("com.everybodypaintstuff.server", DISPATCH_QUEUE_SERIAL)
+    private var socket: GCDAsyncSocket!
+    private let queue: dispatch_queue_t
     
-    var players = [GCDAsyncSocket: SGGamePlayer]()
+    private var players = [GCDAsyncSocket: SGGamePlayer]()
+    private let name: String
     
     override init() {
+        fatalError("Call init(name:) instead.")
+    }
+    
+    init(name: String) {
+        self.name = name
+        queue = dispatch_queue_create("com.sggamenetworking.\(name)", DISPATCH_QUEUE_SERIAL)
+        
         super.init()
+        
         socket = GCDAsyncSocket(delegate: self, delegateQueue: queue)
     }
     
@@ -43,46 +52,51 @@ class SGGameServer: NSObject, GCDAsyncSocketDelegate {
             print("Unable to bind socket.")
         }
         
-        service = SGGameServerNetService(name: String(self), port: Int32(socket.localPort))
+        service = SGGameServerNetService(name: name, port: Int32(socket.localPort))
+        service.startPublishing()
+    }
+    
+    func stopListening() {
+        socket.disconnect()
+        service.stopPublishing()
     }
     
     // MARK: GCDAsyncSocketDelegate
-    func socket(sock: GCDAsyncSocket!, didReadData data: NSData!, withTag tag: Int) {
-        guard let delegate = self.delegate else { return }
-        guard let dataTag = SGDataTag(rawValue: tag) else { return }
-        
-        if dataTag == .HeaderTag {
-            let bodySize = parseSizeFromHeader(data)
-            sock.readBodyDataWithLength(bodySize)
-        } else if dataTag == .BodyTag {
-            if let packet = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? SGGamePacket {
-                if let player = playerForSocket(sock) {
-                    delegate.didReceivePacketFromPlayer(player, packet: packet)
-                }
-            }
-            
-            // Queue next read for packet header size
-            sock.readHeaderData()
-        }
-    }
-    
     func socket(sock: GCDAsyncSocket!, didAcceptNewSocket newSocket: GCDAsyncSocket!) {
         print("Socket connected to address: \(newSocket.connectedHost)")
-        
-        guard let delegate = self.delegate else { return }
         
         let newAddress = newSocket.connectedAddress
         let player = SGGamePlayer(address: newAddress)
         players[newSocket] = player
-        delegate.playerDidConnect(player)
+        delegate?.playerDidConnect(player)
         
         newSocket.delegate = self
         newSocket.readHeaderData()
     }
     
-    func socketDidDisconnect(sock: GCDAsyncSocket!, withError err: NSError!) {
-        print("Socket disconnected: \(sock.connectedHost)")
+    func socket(sock: GCDAsyncSocket!, didReadData data: NSData!, withTag tag: Int) {
+        // Ensure we have a delegate and a valid data tag
+        guard let dataTag = SGDataTag(rawValue: tag) else { return }
         
+        if dataTag == .HeaderTag {
+            
+            // Parse the size of this packet
+            let bodySize = parseSizeFromHeader(data)
+            sock.readBodyDataWithLength(bodySize)
+        } else if dataTag == .BodyTag {
+            
+            // If the packet is valid and we have a player
+            if let packet = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? SGGamePacket {
+                if let player = playerForSocket(sock) {
+                    delegate?.didReceivePacketFromPlayer(player, packet: packet)
+                }
+            }
+            // Queue next read for packet header size
+            sock.readHeaderData()
+        }
+    }
+    
+    func socketDidDisconnect(sock: GCDAsyncSocket!, withError err: NSError!) {
         if let player = playerForSocket(sock) {
             delegate?.playerDidDisconnect(player)
         }

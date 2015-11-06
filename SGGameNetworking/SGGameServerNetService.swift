@@ -9,11 +9,11 @@
 import Foundation
 
 class SGGameServerNetService: NSObject, NSNetServiceDelegate {
-    var service: NSNetService!
-    let name: String
+    private var service: NSNetService!
+    private let name: String
     
     override init() {
-        fatalError("You must call init(port:)")
+        fatalError("Call init(name:, port:) instead.")
     }
     
     init(name: String, port: Int32) {
@@ -21,7 +21,7 @@ class SGGameServerNetService: NSObject, NSNetServiceDelegate {
         
         super.init()
         
-        service = NSNetService(domain: "local", type: ".\(self.name)._tcp.", name: self.name, port: port)
+        service = NSNetService(domain: "local", type: "_\(self.name)._tcp.", name: self.name, port: port)
     }
     
     func startPublishing() {

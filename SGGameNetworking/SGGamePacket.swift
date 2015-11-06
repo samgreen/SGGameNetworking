@@ -8,42 +8,32 @@
 
 import Foundation
 
-// Ugly work around to fix Swift namespacing across the two targets
-@objc
-enum SGPacketType: Int32 {
-    case PlayerName
+protocol SGGamePacketCoding {
+    init(fromData: NSData?)
+    func toData() -> NSData?
 }
 
 @objc(SGGamePacket)
 class SGGamePacket: NSObject, NSCoding {
-    let type: SGPacketType
-    var typeString: String {
-        switch self.type {
-        case .PlayerName: return "PlayerName"
-        }
-    }
     let object: AnyObject?
     
     override init() {
         fatalError("You must use init(type, data)")
     }
     
-    init(type: SGPacketType, object: AnyObject?) {
-        self.type = type
+    init(object: AnyObject?) {
         self.object = object
         
         super.init()
     }
     
     required init?(coder aDecoder: NSCoder) {
-        self.type = SGPacketType(rawValue: aDecoder.decodeInt32ForKey("type"))!
         self.object = aDecoder.decodeObjectForKey("object")
         
         super.init()
     }
     
     func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeInt(type.rawValue, forKey: "type")
         if let object = self.object {
             aCoder.encodeObject(object, forKey: "object")
         }
